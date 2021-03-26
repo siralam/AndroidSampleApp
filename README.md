@@ -24,6 +24,7 @@ If you have any comment, such as if you think something isn't implemented in a c
 - Write Unit tests on ViewModel class
 - Use Android Compose for UI
 - Write instrumental tests
+- Light and Dark themes
 
 ## Preparation before build
 
