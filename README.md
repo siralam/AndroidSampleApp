@@ -12,9 +12,9 @@ If you have any comment, such as if you think something isn't implemented in a c
 - Use Kotlin coroutine to do API calls on background thread
 - Hide API key from Git
 - Hide API key from APK de-packing
+- Code minify and obfuscation
 
 ## To be implemented
-- Code minify and obfuscation
 - Use Jetpack ViewModel and LiveData
 - MVVM architecture
 - Add Crashlytics
