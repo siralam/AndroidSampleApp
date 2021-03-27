@@ -13,18 +13,18 @@ If you have any comment, such as if you think something isn't implemented in a c
 - Hide API key from Git
 - Hide API key from APK de-packing
 - Code minify and obfuscation
+- Use Jetpack[ViewModel, LiveData, Navigation] + MVVM
 
 ## To be implemented
-- Use Jetpack ViewModel and LiveData
-- MVVM architecture
-- Add Crashlytics
 - Use Hilt to do DI
+- Add Crashlytics
 - Write Unit tests on Model class
 - Use Room for local DB
 - Write Unit tests on ViewModel class
 - Use Android Compose for UI
 - Write instrumental tests
 - Light and Dark themes
+- Caching data in Repository
 
 ## Preparation before build
 
@@ -49,5 +49,8 @@ Remember to replace `Put your own API key here` with your real API key you get f
 
 ## FAQ
 
-Q: Why do you wrap another function over the Retrofit functions declared in `OpenWeatherService`, but seems to do nothing additional?  
-A: This is because as the client side I cannot control how the API are designed, but I want the `OpenWeatherService` interface to be exactly the same as what the API is designed. Just like an API doc. And then, even if the API is badly designed, I can wrap it in a function that somehow "convert" the call into what the client side expects to do. By doing this, we won't pollute the core part of the client side code, for example passing a lot of nulls for parameters that I am not interested in.
+Q: Why don't you use DataBinding library before writing UI in Compose?  
+A: Because the DataBinding library publisehd by Google SUCKS. It introduces a lot of difficulty in debugging due to generation of interdemiate classes and extremely insufficient error messages. Also, I think writing view logic in xml just to save a little bit more boilerplate code is a bad idea. Again, the reason is increased debugging difficulty.
+
+Q: Why do you put `Double.kelvinToCelsius()` in ViewModel instead of Fragment(View)?  
+A: I stuggled on whether "How to display data" should be put in View or ViewModel. You know, it is sometimes very clumsy to put it in ViewModel. Consider this scenario: You have a `val user = LiveData<User>()` in your ViewModel. Server returns `user.points` to you in `Double`, and the value is `12345678.9999`, but you just want to display `12 million+` on your UI. If you do this conversion inside `View`, you can still enjoy simply using `val user = LiveData<User>()` in your ViewModel. However, if you put it in `ViewModel`, you have to break down `User` into a bunch of `LiveData` objects and one of them will be `val millionPoints = LiveData(Int)`. This adds a lot of biolerplate code to the VM, isn't it? However, imagine you want to write unit tests for your VM. How do you verify your result? Do your expected output to be `12` or `12345678.9999`? It should be `12` if the unit test makes sense. Therefore, in terms of best practice, I believe we should still put these "How to display" logic inside the VM.

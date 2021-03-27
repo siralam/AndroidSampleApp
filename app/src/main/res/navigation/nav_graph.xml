@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.asksira.androidsampleapp.main.search.SearchFragment"
+        android:name="com.asksira.androidsampleapp.ui.search.SearchFragment"
         android:label="SearchFragment" />
 
 </navigation>

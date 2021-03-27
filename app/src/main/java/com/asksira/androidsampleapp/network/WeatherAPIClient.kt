@@ -1,6 +1,5 @@
 package com.asksira.androidsampleapp.network
 
-import com.asksira.androidsampleapp.network.dto.WeatherResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -22,14 +21,12 @@ object WeatherAPIClient {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    private val weatherService = retrofit.create(OpenWeatherService::class.java)
+    val weatherService: OpenWeatherService = retrofit.create(OpenWeatherService::class.java)
 
     val weatherApiKey by lazy {
         ApiKeyStore.getWeatherApiKey()
     }
 
-    suspend fun getWeatherByCityName(cityName: String): WeatherResponse {
-        return weatherService.getWeatherByCityName(cityName, weatherApiKey)
-    }
+
 
 }

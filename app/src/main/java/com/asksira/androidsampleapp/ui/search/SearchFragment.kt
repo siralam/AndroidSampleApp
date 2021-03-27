@@ -1,27 +1,33 @@
-package com.asksira.androidsampleapp.main.search
+package com.asksira.androidsampleapp.ui.search
 
 import android.app.SearchManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.asksira.androidsampleapp.R
+import java.text.DecimalFormat
 
-class SearchFragment: Fragment() {
+class SearchFragment : Fragment() {
 
     private lateinit var toolbar: Toolbar
     private lateinit var tvWelcome: TextView
     private lateinit var progressBar: ProgressBar
+    private lateinit var llWeatherInfoContainer: LinearLayout
     private lateinit var tvCityName: TextView
     private lateinit var tvTemperature: TextView
     private lateinit var tvHumidity: TextView
+
+    private val vm: SearchViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +38,7 @@ class SearchFragment: Fragment() {
         toolbar = view.findViewById(R.id.tbSearch)
         tvWelcome = view.findViewById(R.id.tvWelcome)
         progressBar = view.findViewById(R.id.pb)
+        llWeatherInfoContainer = view.findViewById(R.id.llWeatherInfoContainer)
         tvCityName = view.findViewById(R.id.tvCityName)
         tvTemperature = view.findViewById(R.id.tvTemperature)
         tvHumidity = view.findViewById(R.id.tvHumidity)
@@ -41,6 +48,29 @@ class SearchFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
+        vm.isProgressBarVisible.observe(viewLifecycleOwner) {
+            progressBar.isVisible = it
+        }
+        vm.isWelcomeMessageVisible.observe(viewLifecycleOwner) {
+            tvWelcome.isVisible = it
+        }
+        vm.isWeatherDataVisible.observe(viewLifecycleOwner) {
+            llWeatherInfoContainer.isVisible = it
+        }
+        vm.currentCityName.observe(viewLifecycleOwner) {
+            tvCityName.text = getString(R.string.label_city_name, it)
+        }
+        vm.minMaxTemperature.observe(viewLifecycleOwner) {
+            val formatter = DecimalFormat("#.0")
+            tvTemperature.text = getString(
+                R.string.label_Temperature,
+                formatter.format(it.first),
+                formatter.format(it.second)
+            )
+        }
+        vm.humidity.observe(viewLifecycleOwner) { humid ->
+            tvHumidity.text = getString(R.string.label_Humidity, humid)
+        }
     }
 
     private fun setupToolbar() {
@@ -53,7 +83,7 @@ class SearchFragment: Fragment() {
         searchView.isSubmitButtonEnabled = true
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Toast.makeText(context, query, Toast.LENGTH_SHORT).show()
+                query?.let { vm.onSearchKeywordConfirmed(it) }
                 return true
             }
 
@@ -63,5 +93,7 @@ class SearchFragment: Fragment() {
 
         })
     }
+
+
 
 }

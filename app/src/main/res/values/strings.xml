@@ -6,6 +6,6 @@
     <string name="welcome">Welcome to this sample weather app.\nTo start, Tap on the search icon.</string>
     <string name="search_city_name_hint">Enter a city name</string>
     <string name="label_city_name">City Name: %s</string>
-    <string name="label_Temperature">Temperature: %1$d°C - %2$d°C</string>
-    <string name="label_Humidity">Humidity: %s\%</string>
+    <string name="label_Temperature">Temperature: %1$s°C - %2$s°C</string>
+    <string name="label_Humidity">Humidity: %1$d%%</string>
 </resources>

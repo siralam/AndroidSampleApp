@@ -4,20 +4,20 @@ import com.google.gson.annotations.SerializedName
 
 data class WeatherData (
     @SerializedName("temp")
-    val temperature: Number,
+    val temperature: Number?,
 
     @SerializedName("feels_like")
-    val feelsLikeTemperature: Number,
+    val feelsLikeTemperature: Number?,
 
     @SerializedName("temp_min")
-    val minTemperature: Number,
+    val minTemperature: Number?,
 
     @SerializedName("temp_max")
-    val maxTemperature: Number,
+    val maxTemperature: Number?,
 
     @SerializedName("pressure")
-    val pressure: Number,
+    val pressure: Number?,
 
     @SerializedName("humidity")
-    val humidity: Number,
+    val humidity: Int?,
 )
