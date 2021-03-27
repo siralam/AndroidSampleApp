@@ -49,8 +49,29 @@ Remember to replace `Put your own API key here` with your real API key you get f
 
 ## FAQ
 
-Q: Why don't you use DataBinding library before writing UI in Compose?  
-A: Because the DataBinding library publisehd by Google SUCKS. It introduces a lot of difficulty in debugging due to generation of interdemiate classes and extremely insufficient error messages. Also, I think writing view logic in xml just to save a little bit more boilerplate code is a bad idea. Again, the reason is increased debugging difficulty.
+Q: Why don't you use DataBinding library before writing UI in Compose?
 
-Q: Why do you put `Double.kelvinToCelsius()` in ViewModel instead of Fragment(View)?  
+A: Because the DataBinding library publisehd by Google SUCKS. It introduces a lot of difficulty in debugging due to generation of interdemiate classes and extremely insufficient error messages. Also, I think writing view logic in xml just to save a little bit more boilerplate code is a bad idea. Again, the reason is increased debugging difficulty.
+<br/><br/>
+
+Q: Why do you put `Double.kelvinToCelsius()` in ViewModel instead of Fragment(View)?
+
 A: I stuggled on whether "How to display data" should be put in View or ViewModel. You know, it is sometimes very clumsy to put it in ViewModel. Consider this scenario: You have a `val user = LiveData<User>()` in your ViewModel. Server returns `user.points` to you in `Double`, and the value is `12345678.9999`, but you just want to display `12 million+` on your UI. If you do this conversion inside `View`, you can still enjoy simply using `val user = LiveData<User>()` in your ViewModel. However, if you put it in `ViewModel`, you have to break down `User` into a bunch of `LiveData` objects and one of them will be `val millionPoints = LiveData(Int)`. This adds a lot of biolerplate code to the VM, isn't it? However, imagine you want to write unit tests for your VM. How do you verify your result? Do your expected output to be `12` or `12345678.9999`? It should be `12` if the unit test makes sense. Therefore, in terms of best practice, I believe we should still put these "How to display" logic inside the VM.
+<br/><br/>
+
+Q: Why don't you use the `SingleLiveData` for showing the error dialog, instead calling vm to reset its value in observer?
+
+A: First of all, I don't see the current approach has serious issues, according to what I know, it simply introduces several more lines of code, and the developer has to remember to call vm to reset the value inside the observation block (which is acceptable). Instead, if I go for `SingleLiveData`, there are new concerns: (1) This is not an officially approved and maintained approach by Google; (2) Assume some collaborator does not understand `SingleLiveData`, it takes time for him to understand what it is and why to use it; (3) It looks like officially Google is introducing Kotlin's `Flow` to solve this problem. May be instead of using `SingleLiveData`, let's look at how shall we apply that instead, in the future.
+<br/><br/>
+
+Q: Why do `SearchFragment` implements `OnRetryListener` instead of passing a lambda into `ErrorRetryDialogFragment`?
+
+A: This is actually one of the most common mistakes I see in a lot of Android developers. You know, member variables in `Fragment` cannot survive configuration changes. Primitives can survive if you put them in arguments. But a callback (interface) cannot be put there. So, if the dialog appears, and the screen is rotated, those callbacks will never function anymore. 
+<br/><br/>
+
+Q: Why don't you use `Navigation` library when displaying error message dialog?
+
+A: In order to make the retry function works, without polluting the scope outside the Fragment (e.g. Store something static), I have no choice but to let the dialog be able to execute a callback. If I use Navigation, I have no way to this. Come to think of it, showing an error message in a dialog is by nature not a navigation at all, so I think this is perfectly OK.
+<br/><br/>
+
+

@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">AndroidSampleApp</string>
 
+    <!-- Common -->
+    <string name="ok">OK</string>
+    <string name="retry">Retry</string>
+    <string name="cancel">Cancel</string>
+
     <!-- Main Screen -->
     <string name="menu_search_title">Search</string>
     <string name="welcome">Welcome to this sample weather app.\nTo start, Tap on the search icon.</string>
@@ -8,4 +13,5 @@
     <string name="label_city_name">City Name: %s</string>
     <string name="label_Temperature">Temperature: %1$s°C - %2$s°C</string>
     <string name="label_Humidity">Humidity: %1$d%%</string>
+    <string name="error_get_weather">An error occurred when retrieving weather info.</string>
 </resources>

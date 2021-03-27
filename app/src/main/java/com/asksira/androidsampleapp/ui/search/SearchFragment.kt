@@ -15,9 +15,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.asksira.androidsampleapp.R
+import com.asksira.androidsampleapp.ui.common.ErrorRetryDialogFragment
 import java.text.DecimalFormat
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(), ErrorRetryDialogFragment.OnRetryListener {
 
     private lateinit var toolbar: Toolbar
     private lateinit var tvWelcome: TextView
@@ -71,6 +72,21 @@ class SearchFragment : Fragment() {
         vm.humidity.observe(viewLifecycleOwner) { humid ->
             tvHumidity.text = getString(R.string.label_Humidity, humid)
         }
+        vm.showsErrorMessage.observe(viewLifecycleOwner) { shows ->
+            if (shows) {
+                val message = getString(R.string.error_get_weather)
+                ErrorRetryDialogFragment().apply {
+                    arguments = Bundle().apply {
+                        putString("message", message)
+                    }
+                }.show(childFragmentManager, ErrorRetryDialogFragment.TAG)
+                vm.hasShownErrorMessage()
+            }
+        }
+    }
+
+    override fun onErrorRetry() {
+        vm.onErrorRetry()
     }
 
     private fun setupToolbar() {
