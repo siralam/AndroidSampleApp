@@ -3,3 +3,5 @@
 
 #File for storing api keys
 src/main/cpp/libnative-lib.cpp
+
+google-services.json

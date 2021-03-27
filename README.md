@@ -14,13 +14,13 @@ If you have any comment, such as if you think something isn't implemented in a c
 - Hide API key from APK de-packing
 - Code minify and obfuscation
 - Use Jetpack[ViewModel, LiveData, Navigation] + MVVM
+- Add Crashlytics
 
 ## To be implemented
 - Use Hilt to do DI
-- Add Crashlytics
-- Write Unit tests on Model class
-- Use Room for local DB
 - Write Unit tests on ViewModel class
+- Use Room for local DB
+- Write Unit tests on Model class
 - Use Android Compose for UI
 - Write instrumental tests
 - Light and Dark themes
