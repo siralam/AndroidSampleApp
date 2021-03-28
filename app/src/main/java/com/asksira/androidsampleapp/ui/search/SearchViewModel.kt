@@ -4,11 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.asksira.androidsampleapp.model.WeatherRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SearchViewModel: ViewModel() {
-
-    private val weatherRepository = WeatherRepository()
+@HiltViewModel
+class SearchViewModel @Inject constructor(
+    private val weatherRepository: WeatherRepository
+): ViewModel() {
 
     val isProgressBarVisible = MutableLiveData(false)
     val isWelcomeMessageVisible = MutableLiveData(true)

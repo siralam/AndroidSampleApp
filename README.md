@@ -15,14 +15,15 @@ If you have any comment, such as if you think something isn't implemented in a c
 - Code minify and obfuscation
 - Use Jetpack[ViewModel, LiveData, Navigation] + MVVM
 - Add Crashlytics
+- Use Hilt to do DI
 
 ## To be implemented
-- Use Hilt to do DI
 - Write Unit tests on ViewModel class
 - Use Room for local DB
 - Write Unit tests on Model class
 - Use Android Compose for UI
 - Write instrumental tests
+- Robust Logging Tool
 - Light and Dark themes
 - Caching data in Repository
 

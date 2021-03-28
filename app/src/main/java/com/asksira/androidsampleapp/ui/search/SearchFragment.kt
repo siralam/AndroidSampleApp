@@ -16,8 +16,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.asksira.androidsampleapp.R
 import com.asksira.androidsampleapp.ui.common.ErrorRetryDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
 
+@AndroidEntryPoint
 class SearchFragment : Fragment(), ErrorRetryDialogFragment.OnRetryListener {
 
     private lateinit var toolbar: Toolbar
