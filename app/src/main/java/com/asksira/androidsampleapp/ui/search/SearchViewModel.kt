@@ -27,7 +27,6 @@ class SearchViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 val response = weatherRepository.getWeatherByCityName(keyword)
-                isProgressBarVisible.value = false
                 isWelcomeMessageVisible.value = false
                 isWeatherDataVisible.value = true
                 response.locationName?.let { currentCityName.value = it }
@@ -40,8 +39,9 @@ class SearchViewModel: ViewModel() {
                     it.humidity?.let { humid -> humidity.value = humid }
                 }
             } catch (e: Exception) {
-                isProgressBarVisible.value = false
                 showsErrorMessage.value = true
+            } finally {
+                isProgressBarVisible.value = false
             }
         }
     }

@@ -74,4 +74,6 @@ Q: Why don't you use `Navigation` library when displaying error message dialog?
 A: In order to make the retry function works, without polluting the scope outside the Fragment (e.g. Store something static), I have no choice but to let the dialog be able to execute a callback. If I use Navigation, I have no way to this. Come to think of it, showing an error message in a dialog is by nature not a navigation at all, so I think this is perfectly OK.
 <br/><br/>
 
+Q: Why don't you use `SavedStateHandle` to make your ViewModel survives process termination by the OS?
 
+A: **I don't like over-engineering**. I value simplicity over complexity. To be exact, there should be a balance between them. Every time you increase your code's complexity, it should be because you think it introduce merits more than demerits. e.g. We use MVVM because we think it has a lot of advantages, such as making codes easier to read, to understand and to modify; not because it is a recommended design pattern. It should be the other way round. Therefore, if you don't really care about your user will need to start from the initial screen of the app when they come back after a long time, write codes to persist states through process termination not only increased development time, increased complexity for trivial benefit, but also increased time to test it.
