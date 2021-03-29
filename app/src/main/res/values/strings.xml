@@ -8,10 +8,12 @@
 
     <!-- Main Screen -->
     <string name="menu_search_title">Search</string>
+    <string name="menu_recent_searches">Recent Searches</string>
     <string name="welcome">Welcome to this sample weather app.\nTo start, Tap on the search icon.</string>
     <string name="search_city_name_hint">Enter a city name</string>
     <string name="label_city_name">City Name: %s</string>
     <string name="label_Temperature">Temperature: %1$s°C - %2$s°C</string>
     <string name="label_Humidity">Humidity: %1$d%%</string>
     <string name="error_get_weather">An error occurred when retrieving weather info.</string>
+    <string name="label_recent_searches">Select a recently searched location</string>
 </resources>
