@@ -13,7 +13,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.asksira.androidsampleapp.R
 import com.asksira.androidsampleapp.ui.common.ErrorRetryDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +30,8 @@ class SearchFragment : Fragment(), ErrorRetryDialogFragment.OnRetryListener {
     private lateinit var tvTemperature: TextView
     private lateinit var tvHumidity: TextView
 
-    private val vm: SearchViewModel by viewModels()
+    //We need to use activityViewModels() here because the ViewModel is shared across Fragments.
+    private val vm: SearchViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,6 +86,7 @@ class SearchFragment : Fragment(), ErrorRetryDialogFragment.OnRetryListener {
                 vm.hasShownErrorMessage()
             }
         }
+        vm.onInit()
     }
 
     override fun onErrorRetry() {
@@ -94,9 +96,10 @@ class SearchFragment : Fragment(), ErrorRetryDialogFragment.OnRetryListener {
     private fun setupToolbar() {
         val context = context ?: return
         toolbar.inflateMenu(R.menu.search_options_menu)
-        val menuItem = toolbar.menu.findItem(R.id.search)
+        //Search button
+        val searchMenuItem = toolbar.menu.findItem(R.id.search)
         val searchManager = getSystemService(context, SearchManager::class.java)
-        val searchView = menuItem.actionView as? SearchView ?: return
+        val searchView = searchMenuItem.actionView as? SearchView ?: return
         searchView.setSearchableInfo(searchManager?.getSearchableInfo(activity?.componentName))
         searchView.isSubmitButtonEnabled = true
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -110,6 +113,17 @@ class SearchFragment : Fragment(), ErrorRetryDialogFragment.OnRetryListener {
             }
 
         })
+        //Recent searches button
+        toolbar.setOnMenuItemClickListener { menu ->
+            when (menu.itemId) {
+                R.id.recentSearches -> displayRecentSearchesDialog()
+            }
+            true
+        }
+    }
+
+    private fun displayRecentSearchesDialog() {
+        RecentSearchBottomSheetDialogFragment().show(childFragmentManager, RecentSearchBottomSheetDialogFragment.TAG)
     }
 
 
