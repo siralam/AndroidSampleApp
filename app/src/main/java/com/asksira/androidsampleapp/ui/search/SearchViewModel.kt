@@ -14,13 +14,20 @@ class SearchViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository
 ): ViewModel() {
 
-    val isProgressBarVisible = MutableLiveData(false)
-    val isWelcomeMessageVisible = MutableLiveData(true)
-    val isWeatherDataVisible = MutableLiveData(false)
-    val currentCityName = MutableLiveData("")
-    val minMaxTemperature = MutableLiveData<(Pair<Double, Double>)>()
-    val humidity = MutableLiveData<Int>()
-    val showsErrorMessage = MutableLiveData(false)
+    var isProgressBarVisible = MutableLiveData(false)
+        private set
+    var isWelcomeMessageVisible = MutableLiveData(true)
+        private set
+    var isWeatherDataVisible = MutableLiveData(false)
+        private set
+    var currentCityName = MutableLiveData("")
+        private set
+    var minMaxTemperature = MutableLiveData<(Pair<Double, Double>)>()
+        private set
+    var humidity = MutableLiveData<Int>()
+        private set
+    var showsErrorMessage = MutableLiveData(false)
+        private set
 
     private var searchingKeyword: String? = null
 
@@ -31,17 +38,15 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val response = weatherRepository.getWeatherByCityName(keyword)
-                isWelcomeMessageVisible.value = false
+                val cityName = response.locationName ?: throw Exception()
+                val minTemp = response.weatherData?.minTemperature?.toDouble() ?: throw Exception()
+                val maxTemp = response.weatherData.maxTemperature?.toDouble() ?: throw Exception()
+                val humid = response.weatherData.humidity ?: throw Exception()
+                currentCityName.value = cityName
+                minMaxTemperature.value = Pair(minTemp.kelvinToCelsius(), maxTemp.kelvinToCelsius())
+                humidity.value = humid
                 isWeatherDataVisible.value = true
-                response.locationName?.let { currentCityName.value = it }
-                response.weatherData?.let {
-                    val min = it.minTemperature?.toDouble()
-                    val max = it.maxTemperature?.toDouble()
-                    if (min != null && max != null) {
-                        minMaxTemperature.value = Pair(min.kelvinToCelsius(), max.kelvinToCelsius())
-                    }
-                    it.humidity?.let { humid -> humidity.value = humid }
-                }
+                isWelcomeMessageVisible.value = false
             } catch (e: Exception) {
                 showsErrorMessage.value = true
             } finally {

@@ -29,18 +29,6 @@ class SearchViewModelTest {
 
     private val weatherRepository = mockk<WeatherRepository>(relaxed = true)
 
-    private val mockWeatherResponse = WeatherResponse(
-        locationName = "Hong Kong",
-        weatherData = WeatherData(
-            temperature = 293.0,
-            feelsLikeTemperature = 295.0,
-            minTemperature = 290.15,
-            maxTemperature = 300.15,
-            pressure = 1009,
-            humidity = 80
-        )
-    )
-
     @Before
     fun setup() {
         vm = SearchViewModel(weatherRepository)
@@ -48,11 +36,12 @@ class SearchViewModelTest {
 
     @Test
     fun `onSearchKeyword calls API and did updates the UI`() {
-        mockWeatherResponse()
+        val cityName = "Hong Kong"
+        mockWeatherResponse(cityName)
         runBlocking {
-            vm.onSearchKeywordConfirmed("Hong Kong")
+            vm.onSearchKeywordConfirmed(cityName)
         }
-        assertThat(vm.currentCityName.value).matches("Hong Kong")
+        assertThat(vm.currentCityName.value).matches(cityName)
         assertThat(vm.minMaxTemperature.value).isEqualTo(Pair(17.0, 27.0))
         assertThat(vm.humidity.value).isEqualTo(80)
     }
@@ -84,17 +73,27 @@ class SearchViewModelTest {
         runBlocking {
             vm.onSearchKeywordConfirmed(keyword)
         }
-        mockWeatherResponse()
+        mockWeatherResponse(keyword)
         vm.onErrorRetry()
-        assertThat(vm.currentCityName.value).matches("Hong Kong")
+        assertThat(vm.currentCityName.value).matches(keyword)
         assertThat(vm.minMaxTemperature.value).isEqualTo(Pair(17.0, 27.0))
         assertThat(vm.humidity.value).isEqualTo(80)
     }
 
-    private fun mockWeatherResponse() {
+    private fun mockWeatherResponse(cityName: String) {
         coEvery {
-            weatherRepository.getWeatherByCityName(any())
-        } returns mockWeatherResponse
+            weatherRepository.getWeatherByCityName(cityName)
+        } returns WeatherResponse(
+            locationName = cityName,
+            weatherData = WeatherData(
+                temperature = 293.0,
+                feelsLikeTemperature = 295.0,
+                minTemperature = 290.15,
+                maxTemperature = 300.15,
+                pressure = 1009,
+                humidity = 80
+            )
+        )
     }
 
     private fun mockWeatherError() {
