@@ -25,16 +25,22 @@ If you have any comment, such as if you think something isn't implemented in a c
 - Use Hilt to do DI
 - Use Room for local DB
 - Write Unit tests on ViewModel class
+- Write Unit tests on DAO class
 
 ## To be implemented
-- Write Unit tests on Model class
-- Use Android Compose for UI
-- Write instrumental tests
+- Write instrumental tests / end-to-end tests
 - Robust Logging Tool
+- Use Android Compose for UI
 - Light and Dark themes
 - Caching data in Repository
 
 ## Preparation before build
+
+### Android Studio Version
+
+Last build on Android Studio Version 4.1.
+
+### Insert your own API Key
 
 Of course I do not place my api key in version control, so before you download the project and try to build and run it, you have to place your api key inside first.
 
