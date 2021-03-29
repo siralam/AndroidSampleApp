@@ -1,7 +1,14 @@
 # AndroidSampleApp
 
-This is a sample Android app that allows you to query weather data.  
-Objective of this app is to demonstrate my ideal app architecture in a simpliest way.  
+Sometimes when we apply for a new job, the company will tell you to complete an assignment first.  
+I believe the objective is to make sure I have the ability to build an app that is elegantly structured.
+
+So, why don't I just build something one-for-all?
+
+This is a sample Android app that aims at demonstrating my ideal app architecture in a simpliest way.  
+The feature is simple - querying weather data.  
+And no styling at all.
+
 Below shows its current status - what has been implemented, and what is in the planning but not yet implemented.
 
 If you have any comment, such as if you think something isn't implemented in a correct way, or does not follow best practice, please feel free to open an issue and discuss together.
@@ -55,7 +62,7 @@ Q: Why don't you use DataBinding library before writing UI in Compose?
 A: Because the DataBinding library publisehd by Google SUCKS. It introduces a lot of difficulty in debugging due to generation of interdemiate classes and extremely insufficient error messages. Also, I think writing view logic in xml just to save a little bit more boilerplate code is a bad idea. Again, the reason is increased debugging difficulty.
 <br/><br/>
 
-Q: Why do you put `Double.kelvinToCelsius()` in ViewModel instead of Fragment(View)?
+Q: Why do you use `Double.kelvinToCelsius()` in ViewModel instead of Fragment(View)?
 
 A: I stuggled on whether "How to display data" should be put in View or ViewModel. You know, it is sometimes very clumsy to put it in ViewModel. Consider this scenario: You have a `val user = LiveData<User>()` in your ViewModel. Server returns `user.points` to you in `Double`, and the value is `12345678.9999`, but you just want to display `12 million+` on your UI. If you do this conversion inside `View`, you can still enjoy simply using `val user = LiveData<User>()` in your ViewModel. However, if you put it in `ViewModel`, you have to break down `User` into a bunch of `LiveData` objects and one of them will be `val millionPoints = LiveData(Int)`. This adds a lot of biolerplate code to the VM, isn't it? However, imagine you want to write unit tests for your VM. How do you verify your result? Do your expected output to be `12` or `12345678.9999`? It should be `12` if the unit test makes sense. Therefore, in terms of best practice, I believe we should still put these "How to display" logic inside the VM.
 <br/><br/>
