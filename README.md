@@ -65,7 +65,7 @@ Remember to replace `Put your own API key here` with your real API key you get f
 
 #### Q. Why choose Kotlin coroutine over RxJava?
 
-A: First of all, they are of different level of things. While coroutine is only used for thread handling, RxJava also acts as a very powerful event stream management framework. RxJava gives a lot of convenience when you need to handle a complex stream of events, for example throttling. I will not give up RxJava, and I will definitely use it when I need it. But if I just need to put my network call to background thread, using RxJava is definitely an overkill, especially given it's library size.
+A: Let me tell you - I love Rx. The 2nd month from the day I became a developer, I use RxJava in all of my Android projects. But, coroutines and RxJava of different level of things. While coroutine is only used for thread handling, RxJava also acts as a very powerful event stream management framework. RxJava gives a lot of convenience when you need to handle a complex stream of events, for example throttling. I will not give up RxJava, and I will definitely use it when I need it. But if I just need to put my network call to background thread, using RxJava is definitely an overkill, especially given it's library size.
 <br/><br/>
 
 #### Q. Why don't you use DataBinding library before writing UI in Compose?
