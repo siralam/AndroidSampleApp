@@ -21,7 +21,6 @@ If you have any comment, such as if you think something isn't implemented in a c
 - Hide API key from APK de-packing
 - Code minify and obfuscation
 - Use Jetpack[ViewModel, LiveData, Navigation] + MVVM
-- Add Crashlytics
 - Use Hilt to do DI
 - Use Room for local DB
 - Write Unit tests on ViewModel class
