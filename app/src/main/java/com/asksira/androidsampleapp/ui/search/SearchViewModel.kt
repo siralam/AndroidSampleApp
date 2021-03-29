@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.asksira.androidsampleapp.model.WeatherRepository
+import com.asksira.androidsampleapp.utils.kelvinToCelsius
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -55,10 +56,6 @@ class SearchViewModel @Inject constructor(
 
     fun onErrorRetry() {
         searchingKeyword?.let { onSearchKeywordConfirmed(it) }
-    }
-
-    private fun Double.kelvinToCelsius(): Double {
-        return this - 273.15
     }
 
 }

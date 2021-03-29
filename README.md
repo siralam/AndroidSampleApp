@@ -16,9 +16,9 @@ If you have any comment, such as if you think something isn't implemented in a c
 - Use Jetpack[ViewModel, LiveData, Navigation] + MVVM
 - Add Crashlytics
 - Use Hilt to do DI
+- Write Unit tests on ViewModel class
 
 ## To be implemented
-- Write Unit tests on ViewModel class
 - Use Room for local DB
 - Write Unit tests on Model class
 - Use Android Compose for UI
