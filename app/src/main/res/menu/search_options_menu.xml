@@ -6,4 +6,8 @@
         android:icon="@drawable/ic_search"
         app:showAsAction="collapseActionView|ifRoom"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
+    <item android:id="@+id/recentSearches"
+        android:title="@string/menu_recent_searches"
+        android:icon="@drawable/ic_history"
+        app:showAsAction="collapseActionView|ifRoom" />
 </menu>
