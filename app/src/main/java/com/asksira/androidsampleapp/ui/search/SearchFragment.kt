@@ -75,12 +75,13 @@ class SearchFragment : Fragment(), ErrorRetryDialogFragment.OnRetryListener {
         vm.humidity.observe(viewLifecycleOwner) { humid ->
             tvHumidity.text = getString(R.string.label_Humidity, humid)
         }
-        vm.showsErrorMessage.observe(viewLifecycleOwner) { shows ->
+        vm.showErrorMessage.observe(viewLifecycleOwner) {
+            val shows = it.first
             if (shows) {
-                val message = getString(R.string.error_get_weather)
+                val errorMessage = it.second ?: getString(R.string.general_error_message)
                 ErrorRetryDialogFragment().apply {
                     arguments = Bundle().apply {
-                        putString("message", message)
+                        putString("message", errorMessage)
                     }
                 }.show(childFragmentManager, ErrorRetryDialogFragment.TAG)
                 vm.hasShownErrorMessage()

@@ -54,7 +54,7 @@ class SearchViewModelTest {
         runBlocking {
             vm.onSearchKeywordConfirmed(searchCityName)
         }
-        assertThat(vm.showsErrorMessage.value).isTrue()
+        assertThat(vm.showErrorMessage.value?.first).isTrue()
     }
 
     @Test
@@ -65,7 +65,7 @@ class SearchViewModelTest {
         runBlocking {
             vm.onSearchKeywordConfirmed(searchCityName)
         }
-        assertThat(vm.showsErrorMessage.value).isTrue()
+        assertThat(vm.showErrorMessage.value?.first).isTrue()
     }
 
     @Test
