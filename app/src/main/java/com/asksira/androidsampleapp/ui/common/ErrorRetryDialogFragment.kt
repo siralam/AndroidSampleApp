@@ -11,10 +11,6 @@ import com.asksira.androidsampleapp.R
 
 class ErrorRetryDialogFragment: DialogFragment() {
 
-    companion object {
-        val TAG = this::class.simpleName!!
-    }
-
     interface OnRetryListener {
         fun onErrorRetry()
     }
@@ -47,6 +43,10 @@ class ErrorRetryDialogFragment: DialogFragment() {
             dismiss()
         }
         return view
+    }
+
+    companion object {
+        val TAG = this::class.simpleName!!
     }
 
 }

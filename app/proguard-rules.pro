@@ -20,14 +20,24 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-#DTO classes, as we can't guarantee collaborators always use @SerializedName.
+# DTO classes, as we can't guarantee collaborators always use @SerializedName.
 -keep class com.asksira.androidsampleapp.network.dto** { *; }
 
-#Remove all logs
--assumenosideeffects class android.util.Log { *; }
+# Entity classes
+-keep class com.asksira.androidsampleapp.model.entity** { *; }
 
-#Gson reference from https://github.com/google/gson/blob/master/examples/android-proguard-example/proguard.cfg
-##---------------Begin: proguard configuration for Gson  ----------
+# No logging in production
+-assumenosideeffects class android.util.Log {
+  v(...);
+  d(...);
+  i(...);
+  w(...);
+  e(...);
+  println(...);
+}
+
+# Gson reference from https://github.com/google/gson/blob/master/examples/android-proguard-example/proguard.cfg
+# #---------------Begin: proguard configuration for Gson  ----------
 # Gson uses generic type information stored in a class file when working with fields. Proguard
 # removes such information by default, so configure it to keep all of it.
 -keepattributes Signature
