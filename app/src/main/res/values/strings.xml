@@ -5,6 +5,7 @@
     <string name="ok">OK</string>
     <string name="retry">Retry</string>
     <string name="cancel">Cancel</string>
+    <string name="general_error_message">An error has occurred.</string>
 
     <!-- Main Screen -->
     <string name="menu_search_title">Search</string>
@@ -14,6 +15,5 @@
     <string name="label_city_name">City Name: %s</string>
     <string name="label_Temperature">Temperature: %1$s°C - %2$s°C</string>
     <string name="label_Humidity">Humidity: %1$d%%</string>
-    <string name="error_get_weather">An error occurred when retrieving weather info.</string>
     <string name="label_recent_searches">Select a recently searched location</string>
 </resources>

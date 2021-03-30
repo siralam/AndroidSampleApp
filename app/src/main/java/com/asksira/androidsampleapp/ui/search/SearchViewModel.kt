@@ -4,9 +4,11 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.asksira.androidsampleapp.model.WeatherRepository
 import com.asksira.androidsampleapp.model.entity.RecentSearch
+import com.asksira.androidsampleapp.utils.getErrorObject
 import com.asksira.androidsampleapp.utils.kelvinToCelsius
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,11 +24,11 @@ class SearchViewModel @Inject constructor(
         private set
     var currentCityName = MutableLiveData("")
         private set
-    var minMaxTemperature = MutableLiveData<(Pair<Double, Double>)>()
+    var minMaxTemperature = MutableLiveData<Pair<Double, Double>>()
         private set
     var humidity = MutableLiveData<Int>()
         private set
-    var showsErrorMessage = MutableLiveData(false)
+    var showErrorMessage = MutableLiveData<Pair<Boolean, String?>>() //Pair(showsOrNot, errorMessage)
         private set
     var recentSearches: LiveData<List<RecentSearch>> = weatherRepository.getRecentSearches().asLiveData()
         private set
@@ -49,7 +51,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun hasShownErrorMessage() {
-        showsErrorMessage.value = false
+        showErrorMessage.value = Pair(false, null)
     }
 
     fun onErrorRetry() {
@@ -83,7 +85,14 @@ class SearchViewModel @Inject constructor(
                     Log.w(TAG, "Failed to save search record: ${e.message}")
                 }
             } catch (e: Exception) {
-                showsErrorMessage.value = true
+                when (e) {
+                    is HttpException -> {
+                        showErrorMessage.value = Pair(true, e.getErrorObject()?.errorMessage)
+                    }
+                    else -> {
+                        showErrorMessage.value = Pair(true, null)
+                    }
+                }
             } finally {
                 isProgressBarVisible.value = false
             }
