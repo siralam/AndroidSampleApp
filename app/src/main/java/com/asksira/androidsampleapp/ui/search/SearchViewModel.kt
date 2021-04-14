@@ -16,22 +16,14 @@ class SearchViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository
 ): ViewModel() {
 
-    var isProgressBarVisible = MutableLiveData(false)
-        private set
-    var isWelcomeMessageVisible = MutableLiveData(false)
-        private set
-    var isWeatherDataVisible = MutableLiveData(false)
-        private set
-    var currentCityName = MutableLiveData("")
-        private set
-    var minMaxTemperature = MutableLiveData<Pair<Double, Double>>()
-        private set
-    var humidity = MutableLiveData<Int>()
-        private set
-    var showErrorMessage = MutableLiveData<Pair<Boolean, String?>>() //Pair(showsOrNot, errorMessage)
-        private set
-    var recentSearches: LiveData<List<RecentSearch>> = weatherRepository.getRecentSearches().asLiveData()
-        private set
+    val isProgressBarVisible = MutableLiveData(false)
+    val isWelcomeMessageVisible = MutableLiveData(false)
+    val isWeatherDataVisible = MutableLiveData(false)
+    val currentCityName = MutableLiveData("")
+    val minMaxTemperature = MutableLiveData<Pair<Double, Double>>()
+    val humidity = MutableLiveData<Int>()
+    val showErrorMessage = MutableLiveData<Pair<Boolean, String?>>() //Pair(showsOrNot, errorMessage)
+    val recentSearches: LiveData<List<RecentSearch>> = weatherRepository.getRecentSearches().asLiveData()
 
     private var searchingKeyword: String? = null
 
