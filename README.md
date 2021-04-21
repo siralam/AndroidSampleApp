@@ -32,6 +32,8 @@ If you have any comment, such as if you think something isn't implemented in a c
 - Use Android Compose for UI
 - Light and Dark themes
 - Caching data in Repository
+- Implement a linter
+- Implement CI using Circle CI
 
 ## Preparation before build
 
